@@ -8,8 +8,8 @@
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans flex items-center justify-center h-screen">
 
-  <div id="container" class="text-center">
-    <!-- Step 1: Initial Message -->
+  <div id="container" class="text-center max-w-md">
+    <!-- Step 1: Initial -->
     <h1 class="text-3xl font-bold mb-6">🔍 Cybersecurity Awareness</h1>
     <button id="scanBtn" class="px-6 py-3 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 transition">
       Scan Me
@@ -24,7 +24,16 @@
     <!-- Step 3: Final Safe Message -->
     <div id="safeMessage" class="hidden mt-6">
       <h2 class="text-2xl font-bold text-green-600">✅ Your phone is safe from hackers!</h2>
-      <p class="mt-2 text-gray-600">This was just a demo to show you how QR codes can lead to websites safely.</p>
+      <p class="mt-2 text-gray-600">This is just a demo. No data is collected.</p>
+
+      <!-- Camera Access Section -->
+      <div class="mt-6 p-4 bg-white rounded-2xl shadow">
+        <h3 class="text-lg font-semibold mb-3">🎥 Try Camera Access</h3>
+        <button onclick="openCamera()" class="px-5 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
+          Open Camera
+        </button>
+        <video id="camera" width="100%" class="mt-4 rounded-lg shadow"></video>
+      </div>
     </div>
   </div>
 
@@ -38,12 +47,23 @@
       scanBtn.classList.add("hidden");
       loading.classList.remove("hidden");
 
-      // After 3 seconds, show safe message
+      // After 3 seconds, show safe message + camera option
       setTimeout(() => {
         loading.classList.add("hidden");
         safeMessage.classList.remove("hidden");
       }, 3000);
     });
+
+    // Camera Access
+    function openCamera() {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          document.getElementById('camera').srcObject = stream;
+        })
+        .catch(err => {
+          alert("Camera access denied: " + err);
+        });
+    }
   </script>
 
 </body>
