@@ -1,34 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR + Camera Demo</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h1>QR + Camera Access Demo</h1>
+<body class="bg-gray-100 text-gray-800 font-sans">
 
   
-  <h2>Scan this QR to open this same page</h2>
-  <div id="qrcode"></div>
-  <hr>
+  <header class="bg-blue-600 text-white text-center py-6 shadow-lg">
+    <h1 class="text-3xl font-bold">QR + Camera Access Demo</h1>
+    <p class="mt-2">📢 This is a <span class="font-semibold">safe educational project</span>.  
+      Scanning the QR will <span class="underline">NOT hack your phone</span> —  
+      As a reminder!! please make sure your camera is in a safe place before agreeing to turn it on. .</p>
+  </header>
 
- 
-  <h2>Try Camera Access</h2>
-  <button onclick="openCamera()">Open Camera</button><br><br>
-  <video id="camera" width="400" autoplay></video>
+  
+  <main class="max-w-5xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
 
-  <script>
-   
-    var myURL = window.location.href;
+
+    <section class="bg-white p-6 rounded-2xl shadow-lg text-center">
+      <h2 class="text-xl font-bold mb-4">🔗 Scan this QR</h2>
+      <div id="qrcode" class="flex justify-center"></div>
+      <p class="mt-4 text-gray-600">Scanning will reload this same page.</p>
+    </section>
 
     
+    <section class="bg-white p-6 rounded-2xl shadow-lg text-center">
+      <h2 class="text-xl font-bold mb-4">🎥 Try Camera Access</h2>
+      <button onclick="openCamera()" class="px-6 py-2 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 transition">
+        Open Camera
+      </button>
+      <video id="camera" width="100%" class="mt-4 rounded-lg shadow"></video>
+    </section>
+
+  </main>
+
+  
+  <footer class="text-center text-gray-500 mt-8 mb-4">
+    <p>🔒 Built for cybersecurity education only. </p>
+  </footer>
+
+  <script>
+    // Generate QR Code pointing to this page
+    var myURL = window.location.href;
     new QRCode(document.getElementById("qrcode"), {
       text: myURL,
       width: 200,
       height: 200
     });
 
-    
+   
     function openCamera() {
       navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
