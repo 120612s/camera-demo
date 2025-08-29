@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QR + Camera Demo</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <h1>QR + Camera Access Demo</h1>
+
+  
+  <h2>Scan this QR to open this same page</h2>
+  <div id="qrcode"></div>
+  <hr>
+
+ 
+  <h2>Try Camera Access</h2>
+  <button onclick="openCamera()">Open Camera</button><br><br>
+  <video id="camera" width="400" autoplay></video>
+
+  <script>
+   
+    var myURL = window.location.href;
+
+    
+    new QRCode(document.getElementById("qrcode"), {
+      text: myURL,
+      width: 200,
+      height: 200
+    });
+
+    
+    function openCamera() {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          document.getElementById('camera').srcObject = stream;
+        })
+        .catch(err => {
+          alert("Camera access denied: " + err);
+        });
+    }
+  </script>
+</body>
+</html>
