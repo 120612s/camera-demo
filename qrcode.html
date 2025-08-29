@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Camera Access Demo</title>
+</head>
+<body>
+  <h1>QR Code Camera Demo</h1>
+  <button onclick="openCamera()">Open Camera</button>
+  <video id="camera" width="400" autoplay></video>
+
+  <script>
+    function openCamera() {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          document.getElementById('camera').srcObject = stream;
+        })
+        .catch(err => {
+          alert("Camera access denied: " + err);
+        });
+    }
+  </script>
+</body>
+</html>
