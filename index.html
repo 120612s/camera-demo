@@ -3,65 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QR + Camera Demo</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <title>Cybersecurity Demo</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 text-gray-800 font-sans">
+<body class="bg-gray-100 text-gray-800 font-sans flex items-center justify-center h-screen">
 
-  
-  <header class="bg-blue-600 text-white text-center py-6 shadow-lg">
-    <h1 class="text-3xl font-bold">QR + Camera Access Demo</h1>
-    <p class="mt-2">📢 This is a <span class="font-semibold">safe educational project</span>.  
-      Scanning the QR will <span class="underline">NOT hack your phone</span> —  
-      As a reminder!! please make sure your camera is in a safe place before agreeing to turn it on. .</p>
-  </header>
+  <div id="container" class="text-center">
+    <!-- Step 1: Initial Message -->
+    <h1 class="text-3xl font-bold mb-6">🔍 Cybersecurity Awareness</h1>
+    <button id="scanBtn" class="px-6 py-3 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 transition">
+      Scan Me
+    </button>
 
-  
-  <main class="max-w-5xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+    <!-- Step 2: Loading -->
+    <div id="loading" class="hidden mt-6">
+      <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-600 mx-auto"></div>
+      <p class="mt-4 text-lg">Checking your phone’s security...</p>
+    </div>
 
-
-    <section class="bg-white p-6 rounded-2xl shadow-lg text-center">
-      <h2 class="text-xl font-bold mb-4">🔗 Scan this QR</h2>
-      <div id="qrcode" class="flex justify-center"></div>
-      <p class="mt-4 text-gray-600">Scanning will reload this same page.</p>
-    </section>
-
-    
-    <section class="bg-white p-6 rounded-2xl shadow-lg text-center">
-      <h2 class="text-xl font-bold mb-4">🎥 Try Camera Access</h2>
-      <button onclick="openCamera()" class="px-6 py-2 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 transition">
-        Open Camera
-      </button>
-      <video id="camera" width="100%" class="mt-4 rounded-lg shadow"></video>
-    </section>
-
-  </main>
-
-  
-  <footer class="text-center text-gray-500 mt-8 mb-4">
-    <p>🔒 Built for cybersecurity education only. </p>
-  </footer>
+    <!-- Step 3: Final Safe Message -->
+    <div id="safeMessage" class="hidden mt-6">
+      <h2 class="text-2xl font-bold text-green-600">✅ Your phone is safe from hackers!</h2>
+      <p class="mt-2 text-gray-600">This was just a demo to show you how QR codes can lead to websites safely.</p>
+    </div>
+  </div>
 
   <script>
-    // Generate QR Code pointing to this page
-    var myURL = window.location.href;
-    new QRCode(document.getElementById("qrcode"), {
-      text: myURL,
-      width: 200,
-      height: 200
-    });
+    const scanBtn = document.getElementById("scanBtn");
+    const loading = document.getElementById("loading");
+    const safeMessage = document.getElementById("safeMessage");
 
-   
-    function openCamera() {
-      navigator.mediaDevices.getUserMedia({ video: true })
-        .then(stream => {
-          document.getElementById('camera').srcObject = stream;
-        })
-        .catch(err => {
-          alert("Camera access denied: " + err);
-        });
-    }
+    scanBtn.addEventListener("click", () => {
+      // Hide button, show loading
+      scanBtn.classList.add("hidden");
+      loading.classList.remove("hidden");
+
+      // After 3 seconds, show safe message
+      setTimeout(() => {
+        loading.classList.add("hidden");
+        safeMessage.classList.remove("hidden");
+      }, 3000);
+    });
   </script>
+
 </body>
 </html>
